@@ -50,21 +50,18 @@ class Make_TL(wx.Frame):
         wx.StaticText(self, label='Outfile', pos=(25, 650))
         self.outfile_box = wx.TextCtrl(self, pos=(100, 650), size=(400, 30))
         self.outfile_box.SetValue(str(outfile))
-        wx.StaticText(self, label='FPS (in)', pos=(25, 690))
+        wx.StaticText(self,  label='FPS (in)', pos=(25, 690))
         self.fps_in_box = wx.TextCtrl(self, pos=(200, 690), size=(100, 30))
         self.fps_in_box.SetValue("10")
-        wx.StaticText(self, label='FPS (out)', pos=(25, 730))
+        wx.StaticText(self,  label='FPS (out)', pos=(25, 730))
         self.fps_out_box = wx.TextCtrl(self, pos=(200, 730), size=(100, 30))
         self.fps_out_box.SetValue("10")
-        wx.StaticText(self, label='Dark Threashold', pos=(25, 770))
+        wx.StaticText(self,  label='Dark Threashold', pos=(25, 770))
         self.darksize_box = wx.TextCtrl(self, pos=(200, 770), size=(100, 30))
         self.darksize_box.SetValue("100000")
         wx.StaticText(self, label='Limit to last', pos=(25, 810))
         date_opts = ['none', 'day', 'week', 'month']
-        self.datecheck_combo = wx.ComboBox(
-            self, choices=date_opts, pos=(
-                200, 810), size=(
-                125, 30))
+        self.datecheck_combo = wx.ComboBox(self, choices = date_opts, pos=(200,810), size=(125, 30))
         self.datecheck_combo.Bind(wx.EVT_COMBOBOX, self.datecheck_combo_go)
         self.datecheck_box = wx.TextCtrl(self, pos=(330, 810), size=(100, 30))
         self.datecheck_box.SetValue("1")
@@ -146,6 +143,7 @@ class Make_TL(wx.Frame):
             print("Want's to see only a number of months,")
             self.datecheck_box.Enable()
 
+
     def scale_pic(self, pic, hnum):
         pic_hight = pic.GetHeight()
         if pic_hight > hnum:
@@ -164,10 +162,9 @@ class Make_TL(wx.Frame):
             last_pic = self.scale_pic(last_pic, 500)
             self.last_pic.SetBitmap(wx.BitmapFromImage(last_pic))
             lpicdate = self.date_from_fn(cap_files[lframe])
-            self.lpic_text.SetLabel(
-                'Frame ' + str(lframe) + '  -  ' + str(lpicdate))
+            self.lpic_text.SetLabel('Frame ' + str(lframe) + '  -  ' + str(lpicdate))
         else:
-            self.last_pic.SetBitmap(wx.EmptyBitmap(10, 10))
+            self.last_pic.SetBitmap(wx.EmptyBitmap(10,10))
             self.fpic_text.SetLabel('end')
 
     def updatefirstpic(self, fframe):
@@ -177,11 +174,10 @@ class Make_TL(wx.Frame):
             first_pic = wx.Image(first_pic, wx.BITMAP_TYPE_ANY)
             first_pic = self.scale_pic(first_pic, 500)
             fpicdate = self.date_from_fn(cap_files[fframe])
-            self.fpic_text.SetLabel(
-                'Frame ' + str(fframe) + '  -  ' + str(fpicdate))
+            self.fpic_text.SetLabel('Frame ' + str(fframe) + '  -  ' + str(fpicdate))
             self.first_pic.SetBitmap(wx.BitmapFromImage(first_pic))
         else:
-            self.first_pic.SetBitmap(wx.EmptyBitmap(10, 10))
+            self.first_pic.SetBitmap(wx.EmptyBitmap(10,10))
             self.fpic_text.SetLabel('start')
 
     def updateUI(self, capsdir):
@@ -275,31 +271,17 @@ class Make_TL(wx.Frame):
             self.lastframe_box.SetValue(str(nlf))
 
     def select_caps_folder(self):
-        openFileDialog = wx.FileDialog(
-            self,
-            "Select caps folder",
-            "",
-            "",
-            "JPG files (*.jpg)|*.jpg",
-            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
-        openFileDialog.SetMessage(
-            "Select an image from the caps folder you want to import")
+        openFileDialog = wx.FileDialog(self, "Select caps folder", "", "", "JPG files (*.jpg)|*.jpg", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+        openFileDialog.SetMessage("Select an image from the caps folder you want to import")
         if openFileDialog.ShowModal() == wx.ID_CANCEL:
             return 'none'
         new_cap_path = openFileDialog.GetPath()
 
         capsdir = os.path.split(new_cap_path)
-        # Used to select set if more than one are present
-        capset = capsdir[1].split(".")[0][0:-10]
+        capset   = capsdir[1].split(".")[0][0:-10]  # Used to select set if more than one are present
         cap_type = capsdir[1].split('.')[1]
         capsdir = capsdir[0] + '/'
-        print(
-            " Selected " +
-            capsdir +
-            " with capset; " +
-            capset +
-            " filetype; " +
-            cap_type)
+        print(" Selected " + capsdir + " with capset; " + capset + " filetype; " + cap_type)
         return capsdir, capset, cap_type
 
     def count_caps(self, capsdir, cap_type):
@@ -316,23 +298,14 @@ class Make_TL(wx.Frame):
             print("make caps graph")
             if OS == "linux":
                 print("Yay linux")
-                os.system(
-                    "../visualisation/caps_graph.py caps=" +
-                    capsdir +
-                    " out=" +
-                    graphdir)
+                os.system("../visualisation/caps_graph.py caps="+capsdir+" out="+graphdir)
             elif OS == 'win':
                 print("oh, windows, i prefer linux but no worries...")
-                os.system(
-                    "python ../visualisation/caps_graph.py caps=" +
-                    capsdir +
-                    " out=" +
-                    graphdir)
+                os.system("python ../visualisation/caps_graph.py caps="+capsdir+" out="+graphdir)
         else:
             print("skipping graphing caps - disabled or no caps to make graphs with")
-        if os.path.exists(graphdir + 'caps_filesize_graph.png'):
-            cap_size_graph_path = wx.Image(
-                graphdir + 'caps_filesize_graph.png', wx.BITMAP_TYPE_ANY)
+        if os.path.exists(graphdir+'caps_filesize_graph.png'):
+            cap_size_graph_path = wx.Image(graphdir+'caps_filesize_graph.png', wx.BITMAP_TYPE_ANY)
             return cap_size_graph_path
         else:
             print("NOT ENOUGH CAPS GRAPH SO USING BLANK THUMB")
