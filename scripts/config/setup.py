@@ -66,7 +66,6 @@ WATCHER_NAME = ' '
 
 LOC_DIC = {}
 
-
 def load_locs():
     print("Loading location details")
     with open(LOC_LOCS, "r") as f:
@@ -185,7 +184,6 @@ def set_locs_and_passes():
     except Exception:
         print("No Reddit user set to recieve mail and issue commands")
         WATCHER_NAME = ' '
-
     if not os.path.exists(LOC_LOCS):
         print("Locations and passes file not found, creating default one...")
         write_loclocs()
@@ -235,6 +233,7 @@ def make_dirs():
         print("Created: " + LOG_PATH)
 
 
+
 def guided_setup():
     """
     Execute guided setup for installing dependencies and creating directories
@@ -247,6 +246,7 @@ def guided_setup():
     print("")
     sys.exit()  # needs to be roloaded now the settings are in place
     raw_input("Press return to continue:")
+
 
 
 def bind_realy(device):
@@ -276,6 +276,7 @@ def bind_realy(device):
                 print("Direction set to HIGH")
                 PI_SET[device + "_on"] = 'high'
                 PI_SET[device] = setting
+
                 save_settings()
                 print(
                     "Set " +

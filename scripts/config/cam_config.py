@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import os
-
 import configparser
 
 #  Create configparser object
@@ -46,6 +45,10 @@ def capture_image(s_cap, c_cap, g_cap, b_cap, x_cap,
     os.system(cam_cmd)
     print("Captured, " + output_file)
 
+def show_menu():
+    global s_val, c_val, g_val, b_val
+    global x_dim, y_dim
+    global additonal_commands
 
 def show_menu():
     """

@@ -1,7 +1,7 @@
 #!/usr/bin/python
+import datetime
 import os
 import sys
-import datetime
 import wx
 
 class Make_TL(wx.Frame):

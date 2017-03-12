@@ -113,6 +113,7 @@ def download_caps(target_ip, target_user, target_pass, theboxname):
                     newcaps.append(capfile)
                     filepath = target_cap_files + capfile
                     localpath = capsdir + capfile
+                    # print filepath, localpath
                     sftp.get(filepath, localpath)
                 if limitbreak == limitbreaklimit:
                     break
@@ -125,7 +126,7 @@ def download_caps(target_ip, target_user, target_pass, theboxname):
             print("So we grabbed " + str(extrapics) + " more pictures")
             sftp.close()
             ssh_tran.close()
-        except:
+        except Exception:
             print("DANG MESSSED UP")
             raise
         print("SSH copy loop finished")
@@ -148,7 +149,7 @@ def download_caps(target_ip, target_user, target_pass, theboxname):
             print("Files Grabbed")
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
     elif OS == 'win':
@@ -161,9 +162,10 @@ def download_caps(target_ip, target_user, target_pass, theboxname):
             os.system(rsync_cmd)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
+
 
 tdht_log = "dht22_log.txt"
 tself_log = "selflog.txt"
@@ -208,7 +210,7 @@ def download_logs(target_ip, target_user, target_pass, theboxname):
             print("local logs updated as " + logsdir)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
     elif OS == 'win':
@@ -220,7 +222,7 @@ def download_logs(target_ip, target_user, target_pass, theboxname):
             os.system(rsync_cmd)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
   # get file tiems again and check if they've changed
@@ -262,7 +264,7 @@ def download_graphs(target_ip, target_user, target_pass, theboxname):
             print("local graphs updated as " + graphdir)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
     elif OS == 'win':
@@ -274,7 +276,7 @@ def download_graphs(target_ip, target_user, target_pass, theboxname):
             os.system(rsync_cmd)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
 
@@ -298,7 +300,7 @@ def download_config(target_ip, target_user, target_pass, theboxname):
             print("local pi config files updated at " + configdir)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
     elif OS == 'win':
@@ -310,7 +312,7 @@ def download_config(target_ip, target_user, target_pass, theboxname):
             os.system(rsync_cmd)
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
+        except Exception:
             print("Unexpected error:", sys.exc_info()[0])
             raise
     print("Config files download")
@@ -329,6 +331,8 @@ def load_dhtlog(retdate=False, limit_days=False, limit_num=False):
             logitem = logitem.split("\n")
         print('Log contains ' + str(len(logitem)) + ' readings.')
         if limit_days:
+            oldest_allowed_date = thetime - \
+                datetime.timedelta(hours=limit_days)
         curr_line = len(logitem) - 1
         limit_line = curr_line - limit_num
         while curr_line >= 0:
@@ -352,7 +356,7 @@ def load_dhtlog(retdate=False, limit_days=False, limit_num=False):
                 dht_temps.append(temp)
                 dht_dates.append(date)
                 curr_line = curr_line - 1
-            except:
+            except Exception:
                 print(
                     "-log item " +
                     str(curr_line) +
@@ -436,7 +440,7 @@ def load_selflog(retdate=False):
                 # uptime
                     uptime = log_dic['uptime_sec']
                     up.append(uptime)
-                except:
+                except Exception:
                     print("didn't parse" + str(item))
         return "none"  # THIS NEEDS TO CHANGE WHEN THE LOG GETS USED FOR GRAPHS
     else:
@@ -463,6 +467,7 @@ def load_switchlog(retdate=False, limit_days=False,
         while curr_line >= 0:
             try:
                 item = logitem[curr_line]
+                # print item
                 item = item.split("@")
                 date = item[1].split(".")[0]
                 date = datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
@@ -484,8 +489,8 @@ def load_switchlog(retdate=False, limit_days=False,
                 switch_list = [switch_script, date, switch_message]
                 switchlog.append(switch_list)
                 curr_line = curr_line - 1
-            except:
-                #print("-log item "+str(curr_line)+" failed to parse, ignoring it..." + logitem[curr_line])
+            # print("-log item "+str(curr_line)+" failed to parse, ignoring it..." + logitem[curr_line])
+            except Exception:
                 curr_line = curr_line - 1
         print("Returning switch log")
         if retdate:
@@ -508,7 +513,7 @@ def load_settings(sets=conf_file):
                 sets_dic[s_item[0]] = s_item[1].rstrip(
                     '\n')  # adds each setting to dictionary
         return sets_dic
-    except:
+    except Exception:
         print("could get info from settings file")
         sets_dic = {'none': none}
         return sets_dic
@@ -861,7 +866,6 @@ class Pigrow(wx.Frame):
                     print("Pi located, disconnected ssh session")
                     self.update_boxname(boxname)
                     return host, boxname  # doens't return it to anyone at the mo
-
                 except paramiko.AuthenticationException as error:
                     print("Authentication failed when connecting to " +
                           str(host))
@@ -1155,7 +1159,7 @@ class Pigrow(wx.Frame):
             boxname = stdout.read().strip().split("=")[1]
             print("Pigrow Found; " + boxname)
             ssh.close()
-        except:
+        except Exception:
             print("dang - can't connect to pigrow")
             raise
         setfilepaths(boxname)
