@@ -344,7 +344,6 @@ def main():
     Make_TL(None)
     app.MainLoop()
 
-
 if __name__ == '__main__':
     capsdir = 'none'
     #capsdir = '/home/pragmo/frompigrow/Flower/caps/'
