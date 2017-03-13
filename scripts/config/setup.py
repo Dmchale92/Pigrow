@@ -23,7 +23,6 @@ except Exception as e:
 print("##################################")
 print("##     Pigrow Setup Utility     ##")
 print("##################################")
-
 CONFIG_PATH = "/home/pi/Pigrow/config/"
 LOC_LOCS = "/home/pi/Pigrow/config/dirlocs.txt"
 
@@ -246,7 +245,6 @@ def guided_setup():
     print("")
     sys.exit()  # needs to be roloaded now the settings are in place
     raw_input("Press return to continue:")
-
 
 
 def bind_realy(device):
