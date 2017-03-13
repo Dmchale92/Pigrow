@@ -41,7 +41,6 @@ SWITCH_PATH = "/home/pi/Pigrow/scripts/switches/"  # timed scripts
 
 # Test timed scripts
 # SWITCH_PATH  = "/home/pragmo/pigitgrow/Pigrow/scripts/switches/"
-
 VALID_GPIO = [2, 3, 4, 17, 27, 22, 10, 9, 11, 0, 5, 6, 13,
               19, 26, 14, 15, 18, 23, 24, 25, 8, 7, 1, 12, 16, 20, 21]
 USED_GPIO_NUM = []
@@ -232,7 +231,6 @@ def make_dirs():
         print("Created: " + LOG_PATH)
 
 
-
 def guided_setup():
     """
     Execute guided setup for installing dependencies and creating directories
@@ -274,7 +272,6 @@ def bind_realy(device):
                 print("Direction set to HIGH")
                 PI_SET[device + "_on"] = 'high'
                 PI_SET[device] = setting
-
                 save_settings()
                 print(
                     "Set " +
