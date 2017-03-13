@@ -68,8 +68,6 @@ They can also be automatically downloaded using the remote gui and the timelapse
 
 The following is out-of-date but sections of it may still be useful.
 
-The following is out-of-date but sections of it may still be useful.
-
 # Test and config scripts
 
 - LED - test_led.py - simply turns the LED on for 30 seconds
