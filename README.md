@@ -137,7 +137,6 @@ This is some init.d business I'll be back to explain once the script is uploaded
 More information at: https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/software-install-updated
 
 - From Linux Repository:
-
           sudo apt-get install uvccapture           #for use with camera
           sudo pip install pexpect                  #for use when logging other pigrows health
           sudo apt-get install python-matplotlib    #for making graphs
