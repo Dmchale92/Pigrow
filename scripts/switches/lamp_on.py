@@ -6,7 +6,6 @@ sys.path.append('/home/pi/Pigrow/scripts/')
 import pigrow_defs
 
 
-
 def lamp_on(set_dic, switch_log):
     script = 'lamp_on.py'
     msg = ("")

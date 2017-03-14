@@ -6,7 +6,6 @@ sys.path.append('/home/pi/Pigrow/scripts/')
 import pigrow_defs
 
 
-
 def fans_off(set_dic, switch_log):
     script = 'fans_off.py'
     msg = ("\n")
