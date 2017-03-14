@@ -2,9 +2,8 @@
 import datetime
 import sys
 
-import pigrow_defs
-
 sys.path.append('/home/pi/Pigrow/scripts/')
+import pigrow_defs
 
 
 def heater_off(set_dic, switch_log):
