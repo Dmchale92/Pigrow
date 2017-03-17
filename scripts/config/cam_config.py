@@ -46,11 +46,6 @@ def capture_image(s_cap, c_cap, g_cap, b_cap, x_cap,
     print("Captured, " + output_file)
 
 def show_menu():
-    global s_val, c_val, g_val, b_val
-    global x_dim, y_dim
-    global additonal_commands
-
-def show_menu():
     """
     Display Menu for Camera testing and configuration
     """
